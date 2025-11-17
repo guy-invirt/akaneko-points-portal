@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>あかねこポイント 掲示板</title>
+    <style>
+        /* サイト全体の基本的なスタイル */
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f7f7f7; /* 薄いグレーの背景 */
+            color: #333;
+            margin: 0;
+            padding: 20px;
+            text-align: center;
+        }
+
+        /* ヘッダーのスタイル */
+        header {
+            background-color: #ff6347; /* トマト色（あかね色をイメージ） */
+            color: white;
+            padding: 15px 0;
+            margin-bottom: 30px;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 2em;
+        }
+
+        /* ポイントリストのコンテナ */
+        #point-list-container {
+            max-width: 800px;
+            margin: 0 auto;
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+        }
+
+        /* 個々のポイント表示エリア（リスト） */
+        .point-entry {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .point-entry:last-child {
+            border-bottom: none; /* 最後のエントリには線をつけない */
+        }
+
+        .point-entry strong {
+            font-size: 1.1em;
+            color: #ff6347; /* 名前を強調 */
+        }
+
+        .point-value {
+            font-size: 1.5em;
+            font-weight: bold;
+            color: #007bff; /* ポイント値を青で目立たせる */
+        }
+
+        /* 最終更新日 */
+        #last-updated {
+            margin-top: 20px;
+            font-size: 0.9em;
+            color: #777;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>🐈 あかねこポイント 掲示板 💰</h1>
+    </header>
+
+    <div id="point-list-container">
+        <h2>現在のポイント状況</h2>
+
+        <div class="point-entry" id="akane-points">
+            <span><strong>あかね</strong>さんのポイント</span>
+            <span class="point-value">3,500 P</span>
+        </div>
+
+        <div class="point-entry" id="torao-points">
+            <span><strong>トラオ</strong>さんのポイント</span>
+            <span class="point-value">1,200 P</span>
+        </div>
+
+        <div class="point-entry" id="shiro-points">
+            <span><strong>シロ</strong>さんのポイント</span>
+            <span class="point-value">500 P</span>
+        </div>
+        
+        <p id="last-updated">最終更新日: 2025年11月17日</p>
+    </div>
+
+</body>
+</html>
