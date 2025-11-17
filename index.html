@@ -3,21 +3,20 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>あかねこポイント 掲示板</title>
+    <title>あかねこポイント ポータルサイト</title>
     <style>
-        /* サイト全体の基本的なスタイル */
+        /* (CSSは変更なし。前回と同じものをそのまま使用) */
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: #f7f7f7; /* 薄いグレーの背景 */
+            background-color: #f7f7f7;
             color: #333;
             margin: 0;
             padding: 20px;
             text-align: center;
         }
 
-        /* ヘッダーのスタイル */
         header {
-            background-color: #ff6347; /* トマト色（あかね色をイメージ） */
+            background-color: #ff6347;
             color: white;
             padding: 15px 0;
             margin-bottom: 30px;
@@ -30,7 +29,6 @@
             font-size: 2em;
         }
 
-        /* ポイントリストのコンテナ */
         #point-list-container {
             max-width: 800px;
             margin: 0 auto;
@@ -40,7 +38,6 @@
             box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
         }
 
-        /* 個々のポイント表示エリア（リスト） */
         .point-entry {
             display: flex;
             justify-content: space-between;
@@ -50,21 +47,20 @@
         }
 
         .point-entry:last-child {
-            border-bottom: none; /* 最後のエントリには線をつけない */
+            border-bottom: none;
         }
 
         .point-entry strong {
             font-size: 1.1em;
-            color: #ff6347; /* 名前を強調 */
+            color: #ff6347;
         }
 
         .point-value {
             font-size: 1.5em;
             font-weight: bold;
-            color: #007bff; /* ポイント値を青で目立たせる */
+            color: #007bff;
         }
 
-        /* 最終更新日 */
         #last-updated {
             margin-top: 20px;
             font-size: 0.9em;
@@ -81,13 +77,57 @@
     <div id="point-list-container">
         <h2>現在のポイント状況</h2>
 
-        <div class="point-entry" id="akane-points">
-            <span><strong>amika</strong>さんのポイント</span>
-            <span class="point-value">4 P</span>
-        </div>
-        
-        <p id="last-updated">最終更新日: 2025年11月17日</p>
+        <div id="points-output">
+            </div>
+
+        <p id="last-updated">最終更新日: <span></span></p>
     </div>
 
+    <script>
+        const DATA_URL = 'points.json';
+        const outputDiv = document.getElementById('points-output');
+
+        function loadPoints() {
+            // points.jsonファイルを読み込む
+            fetch(DATA_URL)
+                .then(response => {
+                    // 読み込みに失敗したらエラーを出す
+                    if (!response.ok) {
+                        throw new Error('ポイントデータの取得に失敗しました');
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    let htmlContent = '';
+                    
+                    // JSONデータ（配列）を一つずつ処理してHTML部品を組み立てる
+                    data.forEach(person => {
+                        // scoreにカンマを付けて見やすくする
+                        const formattedScore = person.score.toLocaleString();
+                        
+                        htmlContent += `
+                            <div class="point-entry">
+                                <span><strong>${person.name}</strong>さんのポイント</span>
+                                <span class="point-value">${formattedScore} P</span>
+                            </div>
+                        `;
+                    });
+
+                    // 組み立てたHTMLをページに挿入
+                    outputDiv.innerHTML = htmlContent;
+
+                    // 最終更新日を更新
+                    const today = new Date().toLocaleDateString('ja-JP', {year: 'numeric', month: 'long', day: 'numeric'});
+                    document.querySelector('#last-updated span').textContent = today;
+                })
+                .catch(error => {
+                    console.error('エラー:', error);
+                    outputDiv.innerHTML = '<p style="color:red;">ポイントデータを読み込めませんでした。points.jsonファイルを確認してください。</p>';
+                });
+        }
+
+        // ページが読み込まれたらポイントをロード開始
+        loadPoints();
+    </script>
 </body>
 </html>
